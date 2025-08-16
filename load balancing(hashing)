@@ -1,0 +1,38 @@
+#include<iostream>
+using namespace std;
+int main() {
+    int servers, requests, val[10];
+    cout<<"Enter the number of servers "<<endl;
+    cin>>servers;
+    int hash_servers[servers];
+    for(int i =0; i<servers; i++){
+        hash_servers[i] = 0;
+    }
+    cout<<"Enter the number of requests "<<endl;
+    cin>>requests;
+    cout<<"Enter the value of "<<requests<<" requests"<<endl;
+    for(int i=0; i<requests; i++){
+        cin>>val[i];
+    }
+    for(int i =0; i<requests; i++) {
+        int hash_val = val[i]%servers;
+        if(hash_servers[hash_val] == 0 ) {
+            hash_servers[hash_val] = val[i];
+        }
+        else{
+            for(int j=1; j<servers; j++) {
+                int next_server = (hash_val + j)%servers;
+                if(hash_servers[next_server] == 0) {
+                    hash_servers[next_server] = val[i];
+                    break;
+                }
+            }
+        }
+    }
+    cout<<"\nFinal server table: \n";
+    for(int i=0; i<servers; i++) {
+        cout<<"server "<<i<<"->";
+        cout<<"Request "<<hash_servers[i]<<"\n";
+    }
+    return 0;
+}
