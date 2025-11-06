@@ -1,0 +1,50 @@
+#include<iostream>
+using namespace std;
+#define MAX 10
+
+void BFS(int graph[MAX][MAX],int start,int n){
+    int visited[MAX]={0};
+    int queue[MAX];
+    int front=0,rear=0;
+    
+    visited[start]=1;
+    queue[rear++]=start;
+    
+    cout<<"start indexing fo=rom"<<start<<endl;
+    
+    while(front < rear){
+        int current=queue[front++];
+        cout<<"Index page:"<<current<<endl;
+        
+        for(int i=0;i<n;i++){
+            if(graph[current][i]==1 && visited[i]==0){
+                visited[i]=1;
+                queue[rear++]=i;
+            
+            }
+        }
+    }
+}
+int main(){
+    int graph[MAX][MAX]={0};
+    int n,e;
+    
+    cout<<"Enter the number of webpage:";
+    cin>>n;
+    
+    cout<<"Enter the number of hyperlink:";
+    cin>>e;
+    
+    cout<<"\n enter links \n";
+    for(int i=0;i<e;i++){
+        int u,v;
+        cin>>u>>v;
+         graph[u][v]=1;
+    }
+    int start;
+    cout<<"The page number:";
+    cin>>start;
+    
+    BFS(graph,start,n);
+    return 0;
+}
