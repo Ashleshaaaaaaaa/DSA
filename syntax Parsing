@@ -1,0 +1,69 @@
+#include<iostream>
+using namespace std;
+#define n 10
+
+class check{
+    public:
+    int top;
+    char arr[n];
+    
+    check(){
+        top=-1;
+    }
+    
+    void push(char a){
+        if(top!=n-1){
+            top++;
+            arr [top]=a;
+        }else {
+            cout<<"Stack is full:";
+        }
+    }
+    
+   char pop(){
+       if(top!=-1){
+           char temp=arr[top];
+           top--;
+           return temp;
+       }else
+       {
+           return '\0';
+       }
+   }
+    
+   bool isEmpty(){
+       return (top==-1);
+   }
+};
+
+int main(){
+    check s;
+    char exp[50];
+    cout<<"Enter the expression:";
+    cin>>exp;
+    
+    for(int i=0;exp[i]!='\0';i++){
+        if(exp[i]=='(' || exp[i]=='[' || exp[i]=='{'){
+            s.push(exp[i]);
+        }else if(exp[i]==')' || exp[i]==']' || exp[i]=='}'){
+           if(s.isEmpty()){
+               cout<<"not balanced";
+               return 0;
+           }
+           char temp=s.pop();
+           if((exp[i]==')' && temp!='(' ) || 
+           (exp[i]==']' && temp!='[') ||
+           (exp[i]=='}' && temp!='{')){
+               cout<<"not balanced";
+               return 0;
+           }
+        }
+        
+    }
+    if(s.isEmpty()){
+        cout<<"balanced expression";
+    }else 
+        
+    cout<<"Not balanced:";
+    return 0;
+}
