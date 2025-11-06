@@ -1,0 +1,90 @@
+#include<iostream>
+#include<string>
+using namespace std;
+
+class node
+{
+    public:
+    string name;
+    int priority;
+    int exetime;
+    node* next;
+    
+    node(string taskname,int p,int t){
+        
+    
+    name=taskname;
+    priority=p;
+    exetime=t;
+    next=NULL;
+}
+};
+
+int main()
+{
+    node* head=NULL;
+    node* temp;
+    int n;
+    cout<<"Enter the no of tasks to be schedule:"<<endl;
+    cin>>n;
+    string name;
+    int p,t,i;
+    for(int i=1;i<=n;i++)
+    {
+    cout<<"Task "<<i<<"name:";
+    cin>>name;
+    cout<<"Enter prioty:";
+    cin>> p;
+    cout<<"Enter the executtion time:";
+    cin>>t;
+    
+    node *newnode=new node(name,p,t);
+    if(head==NULL)
+    {
+      head=newnode;  
+    }
+    else if(newnode->priority > head->priority)
+       {
+           newnode->next=head;
+           head=newnode;
+       }  
+       else
+       {
+          temp=head;
+           while(temp->next!=NULL && temp->next->priority>=head->priority)
+           {
+               temp=temp->next;
+               
+           }
+           newnode->next=temp->next;
+           temp->next=newnode;
+       }
+    }
+    
+    cout<<"\nScghedule task:\n";
+    temp=head;
+    while(temp!=NULL)
+    {
+        cout<<"name"<<temp->name
+        <<"Priority"<<temp->priority
+        <<"Execeution"<<temp->exetime;
+        temp=temp->next;
+        
+    }
+    
+ cout<<"\nExectiution time:\n";
+    temp=head;
+    while(temp!=NULL)
+    {
+        cout<<"executing task"<<temp->name
+        
+        <<"Execeution"<<temp->exetime;
+        temp=temp->next;
+        
+    }
+    
+ cout<<"All tasks has been shecudle"<<endl;
+ return 0;
+ 
+    
+}
