@@ -1,0 +1,103 @@
+#include <iostream>
+using namespace std;
+
+class Queue {
+    static const int max = 10;  // max queue size
+    string arr[max];
+    int front, rear;
+
+public:
+    Queue() {
+        front = -1;
+        rear = -1;
+    }
+
+    // Add (enqueue) new customer
+    void addCustomer(string name) {
+        if ((rear + 1) % max == front) {
+            cout << "Queue is full! Cannot add more jobs.\n";
+            return;
+        }
+        if (front == -1) {  // first job
+            front = rear = 0;
+        } else {
+            rear = (rear + 1) % max;
+        }
+        arr[rear] = name;
+        cout << name << " joined the line.\n";
+    }
+
+    // Delete (dequeue) customer
+    void deleteCustomer() {
+        if (front == -1) {
+            cout << "Queue is empty! No more customer.\n";
+            return;
+        }
+
+        cout << "Processing the job: " << arr[front] 
+             << " has been served and leaves the line.\n";
+
+        if (front == rear) {  // only one job left
+            front = rear = -1;
+        } else {
+            front = (front + 1) % max;
+        }
+    }
+
+    // Show current queue
+    void showqueue() {
+        if (front == -1) {
+            cout << "Queue is empty.\n";
+            return;
+        }
+        cout << "Current Line: ";
+        int i = front;
+        while (true) {
+            cout << arr[i];
+            if (i == rear) break;
+            cout << " -> ";
+            i = (i + 1) % max;
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    Queue q;
+    int choice;
+    string name;
+
+    do {
+        cout << "\n--- Printer Spooler Menu ---\n";
+        cout << "1. Add Job (Enqueue)\n";
+        cout << "2. Process Job (Dequeue)\n";
+        cout << "3. Show Jobs\n";
+        cout << "4. Exit\n";
+        cout << "Choose an option: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter the job name: ";
+                cin >> name;
+                q.addCustomer(name);
+                break;
+            case 2:
+                q.deleteCustomer();
+                break;
+            case 3:
+                cout << "Show the current status:\n";
+                q.showqueue();
+                break;
+            case 4:
+                cout << "Exit! Thank you!\n";
+                break;
+            default:
+                cout << "Invalid option! Please select a valid option.\n";
+        }
+    } while (choice != 4);
+
+    return 0;
+}
+
+
