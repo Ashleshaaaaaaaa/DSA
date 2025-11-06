@@ -1,0 +1,43 @@
+#include<iostream>
+using namespace std;
+#define MAX 10
+
+void DFS(int graph[MAX][MAX],int visited[MAX],int start,int n){
+    cout<<"Indexing start from:"<<start<<endl;
+    visited[start]=1;
+
+for(int i=0;i<n;i++){
+    if(graph[start][i]==1 && visited[i]==0){
+        DFS(graph,visited,i,n);
+    }
+  }
+}
+
+int main() {
+    int graph[MAX][MAX] = {0};
+    int visited[MAX] = {0};
+    int n, e;
+
+    cout << "Enter number of web pages (max 10): ";
+    cin >> n;
+
+    cout << "Enter number of hyperlinks: ";
+    cin >> e;
+
+    cout << "\nEnter links (from to):\n";
+    for (int i = 0; i < e; i++) {
+        int u, v;
+        cin >> u >> v;
+        graph[u][v] = 1;  // directed
+    }
+
+    int start;
+    cout << "\nEnter seed (start) page number: ";
+    cin >> start;
+
+    cout << "\nStarting DFS web crawling from page: " << start << "\n\n";
+
+    DFS(graph, visited, start, n);
+
+    return 0;
+}
